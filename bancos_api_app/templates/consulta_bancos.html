@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Bancos</title>
+</head>
+<body>
+    <h1>Consulta de Bancos</h1>
+
+    <form id="consulta-form">
+        <label for="codigo-compensacao">Código de Compensação:</label>
+        <input type="text" id="codigo-compensacao" name="codigo-compensacao">
+        <button type="submit">Consultar</button>
+    </form>
+
+    <button id="listar-bancos-btn">Listar Todos os Bancos</button>
+
+    <div id="resultado"></div>
+    <div id="resultadolist"></div>
+
+    <script>
+        document.getElementById('consulta-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const codigoCompensacao = document.getElementById('codigo-compensacao').value;
+            consultarBanco(codigoCompensacao);
+        });
+
+        document.getElementById('listar-bancos-btn').addEventListener('click', function() {
+            listarTodosBancos();
+        });
+
+        function consultarBanco(codigoCompensacao) {
+            fetch(`/bancos/${codigoCompensacao}/`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Banco não encontrado');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const resultadoDiv = document.getElementById('resultado');
+                    resultadoDiv.innerHTML = `
+                        <h2>Detalhes do Banco</h2>
+                        <p><strong>Código de Compensação:</strong> ${data.codigo_compensacao}</p>
+                        <p><strong>Nome:</strong> ${data.nome}</p>
+                    `;
+                })
+                .catch(error => {
+                    const resultadoDiv = document.getElementById('resultado');
+                    resultadoDiv.innerHTML = `<p>${error.message}</p>`;
+                });
+        }
+        
+        function listarTodosBancos() {
+            fetch('/bancos/')
+                .then(response => response.json())
+                .then(data => {
+                    const resultadoDiv = document.getElementById('resultadolist');
+                    resultadoDiv.innerHTML = '<h2>Lista de Todos os Bancos</h2>';
+                    data.forEach(banco => {
+                        resultadoDiv.innerHTML += `<p><strong>Código de Compensação:</strong> ${banco.codigo_compensacao}, <strong>Nome:</strong> ${banco.nome}</p>`;
+                    });
+                })
+                .catch(error => {
+                    const resultadoDiv = document.getElementById('resultadolist');
+                    resultadoDiv.innerHTML = `<p>${error.message}</p>`;
+                });
+        }
+    </script>
+</body>
+</html>
