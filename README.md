@@ -11,7 +11,7 @@ git clone https://github.com/viniciusdvieira/rvgasapi.git
 ```bash
 pip install -r requirements.txt
 ```
-2. **Criação do Banco de Dados**: Após instalar o MySQL, crie um novo banco de dados para o seu projeto. Você pode fazer isso usando um cliente MySQL, como o MySQL Workbench, ou executando comandos SQL diretamente no terminal. Use as seguintes configurações para o banco de dados:
+**Criação do Banco de Dados**: Crie um novo banco de dados para o seu projeto. Você pode fazer isso usando um cliente MySQL, como o MySQL Workbench, ou executando comandos SQL diretamente no terminal. Use as seguintes configurações para o banco de dados:
 
    - Nome do Banco de Dados: `api_banco`
    - Usuário: `bancoadm`
