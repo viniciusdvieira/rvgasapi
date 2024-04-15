@@ -19,6 +19,10 @@ pip install -r requirements.txt
    - Host: `localhost`
    - Porta: `3306'  
 
+execute o script para importar os dados do exel para o MYSQl:
+```bash
+python import_exel.py
+```
 depois é só dar o comando:
 ```bash
 python manage.py migrate
